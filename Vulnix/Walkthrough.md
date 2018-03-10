@@ -166,11 +166,15 @@ kali@kali:~$ ssh -l vulnix 192.168.1.100
 vulnix@vulnix:~$ sudo -l
 >Matching 'Defaults' entries for vulnix on this host:
     env_reset,
-    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
->
->User vulnix may run the following commands on this host:
+
+       secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+       >
+
+       >User vulnix may run the following commands on this host:
     (root) sudoedit /etc/exports, (root) NOPASSWD: sudoedit /etc/exports
 
+   
 vulnix@vulnix:~$ sudoedit /etc/exports
 /home/vulnix    *(rw,root_squash)
 /root   *(rw,no_root_squash) <- ADDED
