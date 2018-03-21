@@ -235,6 +235,7 @@ root@VulnOSv2:/root# ls -la
 >-rw-------  1 root root    3 May  2  2016 .psql_history  
 >-rw-------  1 root root  735 May  4  2016 .viminfo  
 >-rw-r--r--  1 root root  165 May  4  2016 **flag.txt**  
+
 root@VulnOSv2:/root# cat flag.txt
 >Hello and welcome.  
 >You successfully compromised the company "JABC" and the server completely !!  
