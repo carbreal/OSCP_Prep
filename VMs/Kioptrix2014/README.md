@@ -1,6 +1,6 @@
 # Kioptrix2014  
 
-**hxxps://www.vulnhub.com/entry/kioptrix-2014-5,62/**  
+**https://www.vulnhub.com/entry/kioptrix-2014-5,62/**  
 
 ### NMAP  
 
@@ -12,14 +12,14 @@ kali@kali:~$ nmap 192.168.1.59 -p1-65535 -A
 >Not shown: 65532 filtered ports  
 >PORT     STATE  SERVICE VERSION  
 >22/tcp   closed ssh  
->80/tcp   open   hxxp    Apache hxxpd 2.2.21 ((FreeBSD) mod_ssl/2.2.21 OpenSSL/0.9.8q DAV/2 PHP/5.3.8)  
+>80/tcp   open   http    Apache hxxpd 2.2.21 ((FreeBSD) mod_ssl/2.2.21 OpenSSL/0.9.8q DAV/2 PHP/5.3.8)  
 >|_hxxp-title: Site doesn't have a title (text/html).  
->8080/tcp open   hxxp    Apache hxxpd 2.2.21 ((FreeBSD) mod_ssl/2.2.21 OpenSSL/0.9.8q DAV/2 PHP/5.3.8)  
+>8080/tcp open   http    Apache hxxpd 2.2.21 ((FreeBSD) mod_ssl/2.2.21 OpenSSL/0.9.8q DAV/2 PHP/5.3.8)  
 >
 >Service detection performed. Please report any incorrect results at hxxps://nmap.org/submit/ .  
 >Nmap done: 1 IP address (1 host up) scanned in 131.62 seconds  
 
-### HxxP PORTS  
+### HTTP PORTS  
 
 Port 80:  
 >CONTENT="5;URL=pChart2.1.3/index.php  
@@ -74,16 +74,16 @@ Yes, Quick Note for the future: Don't go blindly and look for information! The a
 hxxp://192.168.1.59/pChart2.1.3/examples/index.php?Action=View&Script=%2f..%2f..%2fusr/local/etc/apache22/hxxpd.conf  
 
 >*SetEnvIf User-Agent ^Mozilla/4.0 Mozilla4_browser*  
->
-><VirtualHost *:8080>
->  	    DocumentRoot /usr/local/www/apache22/data2
->
-><Directory "/usr/local/www/apache22/data2">
->  	    Options Indexes FollowSymLinks
->          AllowOverride All
->          Order allow,deny
->          *Allow from env=Mozilla4_browser*
-></Directory>
+>  
+><VirtualHost *:8080>  
+>  	    DocumentRoot /usr/local/www/apache22/data2  
+>  
+><Directory "/usr/local/www/apache22/data2">  
+>  	    Options Indexes FollowSymLinks  
+>          AllowOverride All  
+>          Order allow,deny  
+>          *Allow from env=Mozilla4_browser*  
+></Directory>  
 
 Nice try.  
 
@@ -97,7 +97,7 @@ Nice try.
 >\> Accept: */*  
 >\> User-Agent: Mozilla/4.0  
 >\>   
->< HxxP/1.1 200 OK  
+>< HTTPP/1.1 200 OK  
 >< Date: Sat, 05 May 2018 01:30:33 GMT  
 >< Server: Apache/2.2.21 (FreeBSD) mod_ssl/2.2.21 OpenSSL/0.9.8q DAV/2 PHP/5.3.8  
 >< Content-Length: 201  
@@ -105,13 +105,13 @@ Nice try.
 ><   
 >\<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">  
 >\<html>  
-> \<head>
->    \<title>Index of /</title>
->    \</head>
->    \<body>
->   	\<h1>Index of /</h1>
->   	\<ul><li><a href="phptax/"> phptax/</a></li>
->  	\</ul>  
+> \<head>  
+>    \<title>Index of /</title>  
+>    \</head>  
+>    \<body>  
+>   	\<h1>Index of /</h1>  
+>   	\<ul>\<li>\<a href="phptax/"> phptax/</a></li>  
+>  	\</ul> 
 >  \</body></html>  
 > \* Connection #0 to host 192.168.1.59 left intact  
 
