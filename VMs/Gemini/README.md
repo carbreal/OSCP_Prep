@@ -102,9 +102,9 @@ We edit the profile again with the iframe pointing at our server:
 
 And the pdf outputs the /etc/passwd file:  
   
-root\:x:0:0:root:/root:/bin/bash  
+root\:x\:0:0:root:/root:/bin/bash  
 ...
-**gemini1\:x:1000:1000:gemini-sec,,,:/home/gemini1:/bin/bash**  
+**gemini1\:x\:1000:1000:gemini-sec,,,:/home/gemini1:/bin/bash**  
 ..
 
 Here we find the home folder of the local user in the machine: gemini1. Now we need to enter without the key. Let's try the ssh id_rsa file:
