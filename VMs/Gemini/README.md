@@ -53,10 +53,10 @@ In the install.php we found:
 
   
 >  if(!isset($page->error)) {  
->        $page->success = "The installation was successful ! Thank you for using master loging system and we hope you enjo it ! Have fun ! <br/><br/>  
->          \<a class='btn btn-success' href='./index.php'>Start exploring</a>  
->          \<br/><br/>  
->          **\<h3>USER: admin <br/> PASSWORD: 1234</h3>";**  
+>        $page->success = "The installation was successful ! Thank you for using master loging system and we hope you enjo it ! Have fun ! \<br/>\<br/>  
+>          \<a class='btn btn-success' href='./index.php'>Start exploring\</a>  
+>          \<br/>\<br/>  
+>          **\<h3>USER: admin \<br/> PASSWORD: 1234\</h3>";**  
 
    
 Well, we have the default admin credentials...  
@@ -195,7 +195,7 @@ displaying current date...    Congratulations on solving this boot2root machine!
 displaying current date...    Cheers!  
 displaying current date...             _.._..,_,_  
 displaying current date...            (          )  
-displaying current date...             ]~,"-.-~~[  
+displaying current date...             ] ,"-.-~~[  
 displaying current date...           .=])' (;  ([  
 displaying current date...           | ]:: '    [  
 displaying current date...           '=]): .)  ([  
@@ -270,7 +270,7 @@ gemini1@geminiinc:~$ cat test.c
 >}  
 
 gemini1@geminiinc:~$ gcc test.c -o date  
-  
+
 gemini1@geminiinc:~$ listinfo  
 >...  
 root@geminiinc:~# id  
