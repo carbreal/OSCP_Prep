@@ -1,4 +1,4 @@
-# VULNIX
+# TEMPLE OF DOOM
 
 **URL: https://www.vulnhub.com/entry/temple-of-doom-1,243/**
 
