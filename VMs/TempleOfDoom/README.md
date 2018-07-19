@@ -29,7 +29,7 @@
 When we access the http service of the server we get the following message: "Under Construction, Come Back Later!". But, the second request throws an exception.
 Reading the output of the error we know that there's something wrong with the unserialization of the cookie. If we decode the cookie we get something like:  
 
->{"username":"Admin","csrftoken":"u32t4o3tb3gg431fs34ggdgchjwnza0l=","Expires**=":**Friday, 13 Oct 2018 00:00:00 GMT"}  
+>{"username":"Admin","csrftoken":"u32t4o3tb3gg431fs34ggdgchjwnza0l=","Expires**\=\"\:**Friday, 13 Oct 2018 00:00:00 GMT"}  
 
 We see that there's an error in the json format. When we correct this we get a "Hello Admin" message.  
 
