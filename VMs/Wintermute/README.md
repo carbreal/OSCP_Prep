@@ -4,7 +4,7 @@
   
 Awesome lab to test pivoting between machines. The architecture is the following:  
   
-  192.168.148.3   .148.5       .111.6   .111.5  
+  192.168.148.3 ->  .148.5   /    .111.6  -> .111.5  
 |     Kali     | -> |  Straylight  | -> | Neuromancer  |  
   
 # Straylight  
