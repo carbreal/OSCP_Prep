@@ -1,6 +1,6 @@
 # DC-1: 1  
   
-**URL: hxxps://www.vulnhub.com/entry/dc-1-1,292/**  
+**URL: https://www.vulnhub.com/entry/dc-1-1,292/**  
   
 ### NMAP  
   
@@ -140,9 +140,9 @@ hxxp://192.168.111.3/node/2#overlay=admin/content
 Well, let's go back to our shell:  
   
 www-data@DC-1:/var/www$ cat /etc/passwd  
->root\:x\:0:0:root:/root:/bin/bash  
+>root\: x \:0:0:root:/root:/bin/bash  
 >...  
->flag4\:x\:1001:1001:Flag4,,,:/home/flag4:/bin/bash  
+>flag4\: x \:1001:1001:Flag4,,,:/home/flag4:/bin/bash  
   
 There's a user named flag4. Let's brute force our way in:  
   
