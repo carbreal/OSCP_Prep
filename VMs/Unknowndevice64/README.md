@@ -41,8 +41,8 @@ It is an image with just the following message:
   
 Let's download it and play a little:  
   
-root@kali:~# wget http://192.168.111.3:31337/key_is_h1dd3n.jpg  
->--2019-04-17 04:37:27--  http://192.168.111.3:31337/key_is_h1dd3n.jpg  
+root@kali:~# wget hxxp://192.168.111.3:31337/key_is_h1dd3n.jpg  
+>--2019-04-17 04:37:27--  hxxp://192.168.111.3:31337/key_is_h1dd3n.jpg  
 >Connecting to 192.168.111.3:31337... connected.  
 >HTTP request sent, awaiting response... 200 OK  
 >Length: 5386 (5.3K) [image/jpeg]  
@@ -116,7 +116,7 @@ bash-4.4$ sudo -l
   
 What is sysud64?  
   
-bash-4.4$ /usr/bin/sysud64 -h | head -n 20  
+bash-4.4$ /usr/bin/sysud64 -h 
 >usage: strace [-CdffhiqrtttTvVwxxy] [-I n] [-e expr]...  
 >              [-a column] [-o file] [-s strsize] [-P path]...  
 >              -p pid... / [-D] [-E var=val]... [-u username] PROG [ARGS]  
