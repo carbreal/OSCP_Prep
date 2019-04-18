@@ -1,6 +1,6 @@
 # DC-4  
   
-**URL: hxxp://www.five86.com/dc-4.html**  
+**URL: http://www.five86.com/dc-4.html**  
   
 First of all, big thanks to @DCAU7 for sharing these machines with the community.   
   
@@ -122,7 +122,7 @@ www-data@dc-4:/usr/share/nginx/html$ hostname
 Let's check if there are any users in this machine. After all, there was a SSH service running...  
   
 www-data@dc-4:/usr/share/nginx/html$ cat /etc/passwd  
->root:x:0:0:root:/root:/bin/bash  
+>root: x :0:0:root:/root:/bin/bash  
 >...  
 >charles: x :1001:1001:Charles,,,:/home/charles:/bin/bash  
 >jim: x :1002:1002:Jim,,,:/home/jim:/bin/bash  
